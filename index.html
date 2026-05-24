@@ -36,12 +36,36 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-html, body {
+html {
+  height: 100%;
+  height: 100dvh;
+}
+
+body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Syne', sans-serif;
-  min-height: 100vh;
+  height: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   overscroll-behavior: none;
+}
+
+/* ── Zone fixe en haut : header + résultats + svg ── */
+.top-fixed {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Zone scrollable : sliders ── */
+.scroll-zone {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 /* ── Header ── */
@@ -49,12 +73,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 20px 14px;
+  padding: 14px 20px 12px;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 .logo {
   display: flex;
@@ -108,7 +129,7 @@ html, body {
 #scene-svg { display: block; width: 100%; }
 
 /* ── Sections ── */
-.sections { padding: 0 0 40px; }
+.sections { padding: 0 0 60px; }
 
 .section {
   margin: 0;
@@ -247,6 +268,8 @@ input[type=range].orange:active::-webkit-slider-thumb { box-shadow: 0 0 0 8px rg
 </head>
 <body>
 
+<div class="top-fixed">
+
 <div class="header">
   <div class="logo">
     <div class="logo-icon">
@@ -294,6 +317,9 @@ input[type=range].orange:active::-webkit-slider-thumb { box-shadow: 0 0 0 8px rg
   <svg id="scene-svg" viewBox="0 0 380 260"></svg>
 </div>
 
+</div><!-- /top-fixed -->
+
+<div class="scroll-zone">
 <div class="sections">
 
   <!-- SCÈNE -->
@@ -401,9 +427,11 @@ input[type=range].orange:active::-webkit-slider-thumb { box-shadow: 0 0 0 8px rg
     </div>
   </div>
 
-</div>
+</div><!-- /sections -->
 
 <div class="footer">TCHL Front Truss · ZetchoulDelaLoutche · v1.1</div>
+
+</div><!-- /scroll-zone -->
 
 <script>
 let showSol = false;
